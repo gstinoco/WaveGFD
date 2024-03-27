@@ -19,9 +19,9 @@ It is possible to find all test data in the "Data" folder and some sample result
 ## Related Research :blue_book:
 The implemented methods are discussed in detail in the following publications:
 
-  - Tinoco-Guerrero G., Arias-Rojas H., Guzmán-Torres J.A., Román-Gutiérrez R. and Tinoco-Ruiz J.G. (2023) A meshless finite difference scheme applied to the numerical solution of wave equation in highly irregular space regions. Computers & Mathematics with Applications. Vol. 136. doi: [10.1016/j.camwa.2023.01.035](https://doi.org/10.1016/j.camwa.2023.01.035)
+  - Tinoco-Guerrero G., Arias-Rojas H., Guzmán-Torres J.A., Román-Gutiérrez R., and Tinoco-Ruiz J.G., A meshless finite difference scheme applied to the numerical solution of wave equation in highly irregular space regions. Computers & Mathematics with Applications. 136 (2023) 25-33. [10.1016/j.camwa.2023.01.035](https://doi.org/10.1016/j.camwa.2023.01.035)
   
-  - Tinoco-Guerrero G., Domínguez-Mota F.J., Guzmán-Torres J.A., Román-Gutiérrez R. and Tinoco-Ruiz J.G. (2023) Study of the stability of a meshless generalized finite difference scheme applied to the wave equation. Frontiers in Applied Mathematics and Statistics Vol. 9. doi: [10.3389/fams.2023.1214022](http://dx.doi.org/10.3389/fams.2023.1214022)
+  - Tinoco-Guerrero G., Domínguez-Mota F.J., Guzmán-Torres J.A., Román-Gutiérrez R., and Tinoco-Ruiz J.G., Study of the stability of a meshless generalized finite difference scheme applied to the wave equation. Frontiers in Applied Mathematics and Statistics 9:1214022 (2023) [10.3389/fams.2023.1214022](http://dx.doi.org/10.3389/fams.2023.1214022)
 
 ## Researchers :scientist:
 All the codes presented were developed by:
