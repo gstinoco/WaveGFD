@@ -12,7 +12,7 @@ For this, the proposed solution uses a Generalized Finite Differences Method for
 
 England Cloud of Points With Holes                            | England Cloud of Points
 :------------------------------------------------------------:|:------------------------------------------------------------:
-![England Bay Cloud of Points](/Data/Holes/ENG_3.png)         | ![England Bay Cloud of Points](/Data/Clouds/ENG_3.png)
+![England Bay Cloud of Points](/Data/Holes/3/ENG.png)         | ![England Bay Cloud of Points](/Data/Clouds/3/ENG.png)
 
 It is possible to find all test data in the "Data" folder and some sample results in the "Results" folder. Numerical results were not saved in the repository due to file-size limitations, nevertheless, they can be computed and saved by executing the Example files.
 
