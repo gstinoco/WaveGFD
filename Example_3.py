@@ -32,7 +32,8 @@ c       = 1                                                                     
 cho     = 0                                                                         # Approximation Type (Boundary condition).
 sizes   = [1, 2, 3]                                                                 # Size of the clouds to use.
 t       = 2000                                                                      # Number of time-steps.
-Holes   = False                                                                      # Should I use clouds with holes?
+Holes   = False                                                                     # Should I use clouds with holes?
+regular = False                                                                     # Should I use the clouds generated with Dmsh?
 Save    = True                                                                      # Should I save the results?
 first   = True                                                                      # for the first iteration only.
 
@@ -47,9 +48,15 @@ for me in sizes:
     if first:
         # Find all the regions.
         if Holes:
-            regions = glob.glob(f'Data/Holes/' + cloud + '/*.mat')
+            if regular:
+                regions = glob.glob(f'Data/Holes/' + cloud + '/*.mat')
+            else:
+                regions = glob.glob(f'Data/Holes_rand/' + cloud + '/*.mat')
         else:
-            regions = glob.glob(f'Data/Clouds/' + cloud + '/*.mat')
+            if regular:
+                regions = glob.glob(f'Data/Clouds/' + cloud + '/*.mat')
+            else:
+                regions = glob.glob(f'Data/Clouds_rand/' + cloud + '/*.mat')
             
         regions = sorted([os.path.splitext(os.path.basename(region))[0] for region in regions])
         first = False
@@ -93,9 +100,15 @@ for me in sizes:
                     
         # All data is loaded from the file
         if Holes:
-            mat = loadmat('Data/Holes/' + cloud + '/' + reg + '.mat')
+            if regular:
+                mat = loadmat('Data/Holes/' + cloud + '/' + reg + '.mat')
+            else:
+                mat = loadmat('Data/Holes_rand/' + cloud + '/' + reg + '.mat')
         else:
-            mat = loadmat('Data/Clouds/' + cloud + '/' + reg + '.mat')
+            if regular:
+                mat = loadmat('Data/Clouds/' + cloud + '/' + reg + '.mat')
+            else:
+                mat = loadmat('Data/Clouds_rand/' + cloud + '/' + reg + '.mat')
 
         # Node data is saved
         p   = mat['p']
@@ -109,16 +122,124 @@ for me in sizes:
         if Save:
             mdic = {'u_ap': u_ap, 'p': p, 'tt': tt}
             if Holes:
-                folder = 'Results/Example 3/Holes/' + reg
+                if regular:
+                    folder = 'Results/Example 3/Holes/' + reg
+                else:
+                    folder = 'Results/Example 3/Holes_rand/' + reg
             else:
-                folder = 'Results/Example 3/Clouds/' + reg
+                if regular:
+                    folder = 'Results/Example 3/Clouds/' + reg
+                else:
+                    folder = 'Results/Example 3/Clouds_rand/' + reg
 
             if not os.path.exists(folder):
                 os.makedirs(folder)
             Graph.Cloud_1(p, tt, u_ap, save = True, nom = folder + '/' + reg + '_' + cloud + '.mp4')
             Graph.Cloud_Steps_1(p, tt, u_ap, nom = folder + '/' + reg + '_' + cloud)
-            file_n = folder + '/' + reg + '_' + cloud + '.mat'
-            savemat(file_n, mdic)
+            #file_n = folder + '/' + reg + '_' + cloud + '.mat'
+            #savemat(file_n, mdic)
+            #make_tarfile(file_n + '.tar.gz', file_n)
+        else:
+            Graph.Cloud_1(p, tt, u_ap, save = False)
+
+Holes = True                                                                        # Should I use clouds with holes?
+
+## Run the example for all the chosen regions.
+for me in sizes:
+    cloud = str(me)
+    if first:
+        # Find all the regions.
+        if Holes:
+            if regular:
+                regions = glob.glob(f'Data/Holes/' + cloud + '/*.mat')
+            else:
+                regions = glob.glob(f'Data/Holes_rand/' + cloud + '/*.mat')
+        else:
+            if regular:
+                regions = glob.glob(f'Data/Clouds/' + cloud + '/*.mat')
+            else:
+                regions = glob.glob(f'Data/Clouds_rand/' + cloud + '/*.mat')
+            
+        regions = sorted([os.path.splitext(os.path.basename(region))[0] for region in regions])
+        first = False
+
+    for reg in regions:
+        print('Region: ' + reg + ', with size: ' + cloud)
+
+        # Initial Drop
+        if reg == 'BAN':
+            r = np.array([0.1, 0.3])
+        if reg == 'BLU':
+            r = np.array([0.2, 0.35])
+        if reg == 'CAB':
+            r = np.array([0.7, 0.15])
+        if reg == 'CUA':
+            r = np.array([0.8, 0.3])
+        if reg == 'CUI':
+            r = np.array([0.8, 0.3])
+        if reg == 'DOW':
+            r = np.array([0.35, 0.15])
+        if reg == 'ENG':
+            r = np.array([0.3, 0.5])
+        if reg == 'GIB':
+            r = np.array([0.2, 0.3])
+        if reg == 'HAB':
+            r = np.array([0.8, 0.8])
+        if reg == 'MIC':
+            r = np.array([0.3, 0.2])
+        if reg == 'PAT':
+            r = np.array([0.8, 0.8])
+        if reg == 'TIT':
+            r = np.array([0.25, 0.3])
+        if reg == 'TOB':
+            r = np.array([0.7, 0.2])
+        if reg == 'UCH':
+            r = np.array([0.7, 0.45])
+        if reg == 'VAL':
+            r = np.array([0.8, 0.3])
+        if reg == 'ZIR':
+            r = np.array([0.7, 0.25])
+                    
+        # All data is loaded from the file
+        if Holes:
+            if regular:
+                mat = loadmat('Data/Holes/' + cloud + '/' + reg + '.mat')
+            else:
+                mat = loadmat('Data/Holes_rand/' + cloud + '/' + reg + '.mat')
+        else:
+            if regular:
+                mat = loadmat('Data/Clouds/' + cloud + '/' + reg + '.mat')
+            else:
+                mat = loadmat('Data/Clouds_rand/' + cloud + '/' + reg + '.mat')
+
+        # Node data is saved
+        p   = mat['p']
+        tt  = mat['tt']
+        if tt.min() == 1:
+            tt -= 1
+        
+        ## Wave Equation in 2D computed on a unstructured cloud of points.
+        u_ap, u_ex, vec = Wave_2D.Cloud(p, f, g, t, c, cho, r, implicit = True, triangulation = False, tt = tt, lam = 0.75)
+        
+        if Save:
+            mdic = {'u_ap': u_ap, 'p': p, 'tt': tt}
+            if Holes:
+                if regular:
+                    folder = 'Results/Example 3/Holes/' + reg
+                else:
+                    folder = 'Results/Example 3/Holes_rand/' + reg
+            else:
+                if regular:
+                    folder = 'Results/Example 3/Clouds/' + reg
+                else:
+                    folder = 'Results/Example 3/Clouds_rand/' + reg
+
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            Graph.Cloud_1(p, tt, u_ap, save = True, nom = folder + '/' + reg + '_' + cloud + '.mp4')
+            Graph.Cloud_Steps_1(p, tt, u_ap, nom = folder + '/' + reg + '_' + cloud)
+            #file_n = folder + '/' + reg + '_' + cloud + '.mat'
+            #savemat(file_n, mdic)
             #make_tarfile(file_n + '.tar.gz', file_n)
         else:
             Graph.Cloud_1(p, tt, u_ap, save = False)
