@@ -31,7 +31,7 @@ from Scripts.TarFile import make_tarfile
 c       = 1                                                                         # Wave coefficient.
 cho     = 0                                                                         # Approximation Type (Boundary condition).
 sizes   = [1, 2, 3]                                                                 # Size of the clouds to use.
-t       = 2000                                                                      # Number of time-steps.
+t       = 4000                                                                      # Number of time-steps.
 Holes   = False                                                                     # Should I use clouds with holes?
 regular = False                                                                     # Should I use the clouds generated with Dmsh?
 Save    = True                                                                      # Should I save the results?
