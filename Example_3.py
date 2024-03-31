@@ -32,7 +32,7 @@ c       = 1                                                                     
 cho     = 0                                                                         # Approximation Type (Boundary condition).
 sizes   = [1, 2, 3]                                                                 # Size of the clouds to use.
 t       = 2000                                                                      # Number of time-steps.
-Holes   = True                                                                      # Should I use clouds with holes?
+Holes   = False                                                                      # Should I use clouds with holes?
 Save    = True                                                                      # Should I save the results?
 first   = True                                                                      # for the first iteration only.
 
