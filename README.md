@@ -1,5 +1,5 @@
 # WaveGFD
-Data and methods for numerically solving the wave equation using a meshless Generalized Finite Differences Scheme
+Data and methods for numerically solving the wave equation using a meshless Generalized Finite Differences Scheme.
 
 All the codes are distributed under MIT License on [GitHub](https://github.com/gstinoco/WaveGFD) and are free to use, modify, and distribute giving the proper copyright notice.
 
@@ -14,7 +14,7 @@ England Cloud of Points With Holes                            | England Cloud of
 :------------------------------------------------------------:|:------------------------------------------------------------:
 ![England Bay Cloud of Points](/Data/Holes/ENG_3.png)         | ![England Bay Cloud of Points](/Data/Clouds/ENG_3.png)
 
-It is possible to find all test data in the "Data" folder and some sample results in the "Results" folder.
+It is possible to find all test data in the "Data" folder and some sample results in the "Results" folder. Some numerical results were not saved in the repository due to file-size limitations, nevertheless, they can be computed and saved by executing the Example files.
 
 ## Related Research :blue_book:
 The implemented methods are discussed in detail in the following publications:

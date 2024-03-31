@@ -178,7 +178,7 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
     min_val  = u_ap.min()
     max_val  = u_ap.max()
 
-    fig, (ax1) = plt.subplots(1, 1, subplot_kw = {"projection": "3d"}, figsize = (10, 5))
+    fig, (ax1) = plt.subplots(1, 1, subplot_kw = {"projection": "3d"}, figsize = (5, 5))
 
     if save:
         def update_plot(k):
@@ -190,6 +190,7 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
             ax1.set_zlim([min_val, max_val])
             ax1.set_title('Approximation')
             ax1.view_init(90,270)
+            ax1.set_zticks([])
 
             return fig,
     
@@ -205,6 +206,7 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
             ax1.set_zlim([min_val, max_val])
             ax1.set_title('Approximation')
             ax1.view_init(90,270)
+            ax1.set_zticks([])
 
             plt.pause(0.1)
             ax1.clear()
@@ -215,6 +217,8 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
         ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,-1], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
+        ax1.view_init(90,270)
+        ax1.set_zticks([])
         
         plt.pause(0.1)
         plt.close()
@@ -249,7 +253,7 @@ def Cloud_Steps_1(p, tt, u_ap, nom = ''):
     for i in np.arange(0, t+1, step):
         if i >= t:
             i = t-1
-        fig, (ax1) = plt.subplots(1, 1, subplot_kw = {"projection": "3d"}, figsize = (10, 5))
+        fig, (ax1) = plt.subplots(1, 1, subplot_kw = {"projection": "3d"}, figsize = (5, 5))
         tin = float(T[i])
         
         plt.suptitle('Solution at t = %1.3f s.' %tin)
@@ -257,6 +261,7 @@ def Cloud_Steps_1(p, tt, u_ap, nom = ''):
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
         ax1.view_init(90,270)
+        ax1.set_zticks([])
         
         nok = nom + '_' + str(format(T[i],'.2f')) + 's.png'
         plt.savefig(nok)
