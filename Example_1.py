@@ -30,7 +30,7 @@ from Scripts.TarFile import make_tarfile
 ## Problem parameters.
 c       = np.sqrt(1/2)                                                              # Wave coefficient.
 cho     = 1                                                                         # Approximation Type (Boundary condition).
-sizes   = [1]                                                                 # Size of the clouds to use.
+sizes   = [1, 2, 3]                                                                 # Size of the clouds to use.
 r       = np.array([0, 0])                                                          # No water drop-function.
 t       = 4000                                                                      # Number of time-steps.
 Holes   = False                                                                     # Should I use clouds with holes?
