@@ -18,6 +18,7 @@ Last Modification:
 
 ## Library importation.
 import numpy as np
+from scipy.spatial import KDTree
 
 def Triangulation(p, tt, nvec):
     """
@@ -50,8 +51,32 @@ def Triangulation(p, tt, nvec):
 
 def Cloud(p, nvec):
     """
-    Clouds
-    Routine to find the neighbor nodes in a cloud of points generated with dmsh on Python.
+    Cloud
+    Function to find the neighbor nodes in a cloud of points generated.
+    
+    Input:
+        p           m x 3           Array           Array with the coordinates of the nodes and a flag for the boundary.
+        nvec                        integer         Maximum number of neighbors.
+    
+    Output:
+        vec         m x nvec        double          Array with matching neighbors of each node.
+    """
+    
+    ## Variable initialization.
+    m    = len(p[:,0])                                                              # The size if the triangulation is obtained.
+    tree = KDTree(p[:, :2])                                                         # Consider the x, y-coordinates of all the nodes.
+    vec  = np.zeros([m, nvec], dtype=int) - 1                                       # The array for the neighbors is initialized.
+
+    for i, point in enumerate(p):                                                   # For each of the nodes.
+        _, index  = tree.query(point[:2], k = nvec + 1)                             # Look for the closest nodes.
+        vec[i, :] = index[1:]                                                       # Take out the central node from the index.
+        
+    return vec
+
+def Cloud_old(p, nvec):
+    """
+    Cloud
+    Function to find the neighbor nodes in a cloud of points.
     
     Input:
         p           m x 3           Array           Array with the coordinates of the nodes and a flag for the boundary.
@@ -99,4 +124,4 @@ def Cloud(p, nvec):
                         I  = np.argmax(d2)                                          # Look for the greatest distance.
                         if d < d2[I]:                                               # If the new node is closer than the farthest neighbor.
                             vec[i,I] = j                                            # The new neighbor replace the farthest one.
-    return vec 
+    return vec
