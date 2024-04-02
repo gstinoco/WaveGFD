@@ -27,22 +27,22 @@ from scipy.io import loadmat
 from scipy.io import savemat
 from Scripts.TarFile import make_tarfile
 
-def run_example(Holes, regular):
+def run_example(Holes):
     ## Problem parameters.
     c       = np.sqrt(1/2)                                                          # Wave coefficient.
     cho     = 1                                                                     # Approximation Type (Boundary condition).
-    sizes   = [1, 2, 3]                                                             # Size of the clouds to use.
+    sizes   = [2]                                                             # Size of the clouds to use.
     r       = np.array([0, 0])                                                      # No water drop-function.
     t       = 4000                                                                  # Number of time-steps.
-    Save    = True                                                                  # Should I save the results?
+    Save    = False                                                                  # Should I save the results?
 
     ## Boundary conditions.
     f = lambda x, y, t, c, cho, r: np.cos(np.pi*t)*np.sin(np.pi*(x+y))              # f = \cos{\pi t}\sin{\pi(x + y)}
     g = lambda x, y, t, c, cho, r: -np.sin(np.pi*t)*np.sin(np.pi*(x+y))             # g = -\pi\sin{\pi t}\sin{\pi(x + y)}
 
     # Consolidated path construction
-    data_path    = 'Data/{}{}/'.format('Holes' if Holes else 'Clouds', '_rand' if not regular else '')
-    results_path = 'Results/Example 1/{}{}/'.format('Holes' if Holes else 'Clouds', '_rand' if not regular else '')
+    data_path    = 'Data/{}/'.format('Holes' if Holes else 'Clouds')
+    results_path = 'Results/Example 1/{}/'.format('Holes' if Holes else 'Clouds')
 
     ## Run the example for all the chosen regions.
     for me in sizes:
@@ -51,6 +51,7 @@ def run_example(Holes, regular):
         # Find and organize all the regions.
         regions_path = glob.glob(f'{data_path}{cloud}/*.mat')
         regions      = sorted([os.path.splitext(os.path.basename(region))[0] for region in regions_path])
+        regions = ['BAN']
 
         for reg in regions:
             print(f'Region: {reg}, with size: {cloud}')
@@ -87,13 +88,11 @@ def run_example(Holes, regular):
                 Graph.Cloud(p, tt, u_ap, u_ex, save = False)
 
 configurations = [
-    (False, True),
-    (True, True),
-    (False, False),
-    (True, False)
+    (False),
+    (True)
 ]
 
-for Holes, regular in configurations:
-    print(f"Computing numerical solution with Holes = {Holes} and regular = {regular}.")
-    run_example(Holes, regular)
+for Holes in configurations:
+    print(f"Computing numerical solution with Holes = {Holes}.")
+    run_example(Holes)
     print("Computation completed.\n") 
