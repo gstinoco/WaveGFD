@@ -31,10 +31,10 @@ def run_example(Holes):
     ## Problem parameters.
     c       = np.sqrt(1/2)                                                          # Wave coefficient.
     cho     = 1                                                                     # Approximation Type (Boundary condition).
-    sizes   = [2]                                                             # Size of the clouds to use.
+    sizes   = [1, 2, 3]                                                             # Size of the clouds to use.
     r       = np.array([0, 0])                                                      # No water drop-function.
-    t       = 4000                                                                  # Number of time-steps.
-    Save    = False                                                                  # Should I save the results?
+    t       = 2000                                                                  # Number of time-steps.
+    Save    = True                                                                  # Should I save the results?
 
     ## Boundary conditions.
     f = lambda x, y, t, c, cho, r: np.cos(np.pi*t)*np.sin(np.pi*(x+y))              # f = \cos{\pi t}\sin{\pi(x + y)}
@@ -48,18 +48,17 @@ def run_example(Holes):
     for me in sizes:
         cloud       = str(me)
 
-        # Find and organize all the regions.
+        ## Find and organize all the regions.
         regions_path = glob.glob(f'{data_path}{cloud}/*.mat')
         regions      = sorted([os.path.splitext(os.path.basename(region))[0] for region in regions_path])
-        regions = ['BAN']
 
         for reg in regions:
             print(f'Region: {reg}, with size: {cloud}')
             
-            # All data is loaded from the file
+            ## All data is loaded from the file
             mat = loadmat(f'{data_path}{cloud}/{reg}.mat')
             
-            # Node data is saved
+            ## Node data is saved
             p   = mat['p']
             tt  = mat['tt']
             if tt.min() == 1:
@@ -76,11 +75,11 @@ def run_example(Holes):
                 folder = os.path.join(results_path, reg)
                 os.makedirs(folder, exist_ok = True)
 
-                # Save the solution on video and graphs.
+                ## Save the solution on video and graphs.
                 Graph.Cloud(p, tt, u_ap, u_ex, save = True, nom = os.path.join(folder, f'{reg}_{cloud}.mp4'))
                 Graph.Cloud_Steps(p, tt, u_ap, u_ex,nom = os.path.join(folder, f'{reg}_{cloud}'))
 
-                # Save the solution un MATLAB format.
+                ## Save the solution un MATLAB format.
                 #mdic = {'u_ap': u_ap, 'p': p, 'tt': tt}
                 #savemat(os.path.join(folder, f'{reg}_{cloud}.mat'), mdic)
                 #make_tarfile(os.path.join(folder, f'{reg}_{cloud}' + '.tar.gz'), os.path.join(folder, f'{reg}_{cloud}.mat'))
@@ -93,6 +92,6 @@ configurations = [
 ]
 
 for Holes in configurations:
-    print(f"Computing numerical solution with Holes = {Holes}.")
+    print(f'\nComputing numerical solution with Holes = {Holes}.')
     run_example(Holes)
     print("Computation completed.\n") 

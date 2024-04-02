@@ -56,6 +56,9 @@ def Cloud(p, tt, u_ap, u_ex, save = False, nom = ''):
     
     if save:
         def update_plot(k):
+            if k >= t:
+                k = t-1
+                
             ax1.clear()
             ax2.clear()
             tin = float(T[k])
@@ -71,7 +74,7 @@ def Cloud(p, tt, u_ap, u_ex, save = False, nom = ''):
             
             return fig,
     
-        ani = FuncAnimation(fig, update_plot, frames = np.arange(0, t, step), blit = True)
+        ani = FuncAnimation(fig, update_plot, frames = np.arange(0, t+1, step), blit = True)
         ani.save(nom, writer = 'ffmpeg', fps=10)
 
     else:
@@ -134,19 +137,19 @@ def Cloud_Steps(p, tt, u_ap, u_ex, nom):
     T        = np.linspace(0, 1, t)
 
     ## Create the graphs.
-    for i in np.arange(0, t+1, step):
-        if i >= t:
-            i = t-1
+    for k in np.arange(0, t+1, step):
+        if k >= t:
+            k = t-1
         fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"}, figsize = (10, 5))
-        tin = float(T[i])
+        tin = float(T[k])
         plt.suptitle('Solution at t = %1.3f s.' %tin)
-        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,i], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
+        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
-        ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,i], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
+        ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax2.set_zlim([min_val, max_val])
         ax2.set_title('Theoretical Solution')
-        nok = nom + '_' + str(format(T[i],'.2f')) + 's.png'
+        nok = nom + '_' + str(format(T[k],'.2f')) + 's.png'
         plt.savefig(nok)
         plt.close()
 
@@ -182,6 +185,9 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
 
     if save:
         def update_plot(k):
+            if k >= t:
+                k = t-1
+
             ax1.clear()
             tin = float(T[k])
 
@@ -194,7 +200,7 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
 
             return fig,
     
-        ani = FuncAnimation(fig, update_plot, frames = np.arange(0, t, step), blit = True)
+        ani = FuncAnimation(fig, update_plot, frames = np.arange(0, t+1, step), blit = True)
         ani.save(nom, writer = 'ffmpeg', fps=10)
 
     else:
@@ -250,19 +256,19 @@ def Cloud_Steps_1(p, tt, u_ap, nom = ''):
     max_val  = u_ap.max()
 
     ## Create the graph.
-    for i in np.arange(0, t+1, step):
-        if i >= t:
-            i = t-1
+    for k in np.arange(0, t+1, step):
+        if k >= t:
+            k = t-1
         fig, (ax1) = plt.subplots(1, 1, subplot_kw = {"projection": "3d"}, figsize = (5, 5))
-        tin = float(T[i])
+        tin = float(T[k])
         
         plt.suptitle('Solution at t = %1.3f s.' %tin)
-        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,i], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
+        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
         ax1.view_init(90,270)
         ax1.set_zticks([])
         
-        nok = nom + '_' + str(format(T[i],'.2f')) + 's.png'
+        nok = nom + '_' + str(format(T[k],'.2f')) + 's.png'
         plt.savefig(nok)
         plt.close()
