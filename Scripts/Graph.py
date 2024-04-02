@@ -46,47 +46,48 @@ def Cloud(p, tt, u_ap, u_ex, save = False, nom = ''):
     ## Variable initialization.
     if tt.min() == 1:
         tt -= 1
-    t        = len(u_ex[0, :])
-    step     = int(np.ceil(t/50))
-    T        = np.linspace(0, 1, t)
-    min_val  = u_ex.min()
-    max_val  = u_ex.max()
+    t       = len(u_ex[0, :])
+    step    = int(np.ceil(t/50))
+    T       = np.linspace(0, 1, t)
+    min_val = u_ex.min()
+    max_val = u_ex.max()
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"}, figsize=(10, 5))
+    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"}, figsize = (10, 5))
     
     if save:
         def update_plot(k):
             if k >= t:
-                k = t-1
+                k = t - 1
                 
             ax1.clear()
             ax2.clear()
             tin = float(T[k])
             fig.suptitle('Solution at t = %1.3f s.' % tin)
             
-            ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, k], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+            ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
             ax1.set_zlim([min_val, max_val])
             ax1.set_title('Approximation')
             
-            ax2.plot_trisurf(p[:, 0], p[:, 1], u_ex[:, k], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+            ax2.plot_trisurf(p[:, 0], p[:, 1], u_ex[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
             ax2.set_zlim([min_val, max_val])
             ax2.set_title('Theoretical Solution')
             
-            return fig,
+            return fig, 
     
         ani = FuncAnimation(fig, update_plot, frames = np.arange(0, t+1, step), blit = True)
-        ani.save(nom, writer = 'ffmpeg', fps=10)
+        ani.save(nom, writer = 'ffmpeg', fps = 10)
+        plt.close()
 
     else:
-        for k in np.arange(0,t,step):
+        for k in np.arange(0, t, step):
             tin = float(T[k])
             fig.suptitle('Solution at t = %1.3f s.' %tin)
 
-            ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+            ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
             ax1.set_zlim([min_val, max_val])
             ax1.set_title('Approximation')
             
-            ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,k], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+            ax2.plot_trisurf(p[:, 0], p[:, 1], u_ex[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
             ax2.set_zlim([min_val, max_val])
             ax2.set_title('Theoretical Solution')
 
@@ -97,11 +98,11 @@ def Cloud(p, tt, u_ap, u_ex, save = False, nom = ''):
         tin = float(T[-1])
         fig.suptitle('Solution at t = %1.3f s.' %tin)
 
-        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,-1], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+        ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, -1], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
         
-        ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,-1], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+        ax2.plot_trisurf(p[:, 0], p[:, 1], u_ex[:, -1], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax2.set_zlim([min_val, max_val])
         ax2.set_title('Theoretical Solution')
 
@@ -130,26 +131,26 @@ def Cloud_Steps(p, tt, u_ap, u_ex, nom):
     ## Variable initialization.
     if tt.min() == 1:
         tt -= 1
-    t        = len(u_ex[0,:])
-    step     = int(np.ceil(t/2))
-    min_val  = u_ex.min()
-    max_val  = u_ex.max()
-    T        = np.linspace(0, 1, t)
+    t       = len(u_ex[0, :])
+    step    = int(np.ceil(t/2))
+    min_val = u_ex.min()
+    max_val = u_ex.max()
+    T       = np.linspace(0, 1, t)
 
     ## Create the graphs.
     for k in np.arange(0, t+1, step):
         if k >= t:
-            k = t-1
+            k = t - 1
         fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"}, figsize = (10, 5))
         tin = float(T[k])
         plt.suptitle('Solution at t = %1.3f s.' %tin)
-        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
+        ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
-        ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
+        ax2.plot_trisurf(p[:, 0], p[:, 1], u_ex[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax2.set_zlim([min_val, max_val])
         ax2.set_title('Theoretical Solution')
-        nok = nom + '_' + str(format(T[k],'.2f')) + 's.png'
+        nok = nom + '_' + str(format(T[k], '.2f')) + 's.png'
         plt.savefig(nok)
         plt.close()
 
@@ -175,43 +176,44 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
     ## Variable initialization.
     if tt.min() == 1:
         tt -= 1
-    t        = len(u_ap[0, :])
-    step     = int(np.ceil(t/50))
-    T        = np.linspace(0, 1, t)
-    min_val  = u_ap.min()
-    max_val  = u_ap.max()
+    t       = len(u_ap[0, :])
+    step    = int(np.ceil(t/50))
+    T       = np.linspace(0, 1, t)
+    min_val = u_ap.min()
+    max_val = u_ap.max()
 
     fig, (ax1) = plt.subplots(1, 1, subplot_kw = {"projection": "3d"}, figsize = (5, 5))
 
     if save:
         def update_plot(k):
             if k >= t:
-                k = t-1
+                k = t - 1
 
             ax1.clear()
             tin = float(T[k])
 
             fig.suptitle('Solution at t = %1.3f s.' %tin)
-            ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+            ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
             ax1.set_zlim([min_val, max_val])
             ax1.set_title('Approximation')
-            ax1.view_init(90,270)
+            ax1.view_init(90, 270)
             ax1.set_zticks([])
 
-            return fig,
+            return fig, 
     
         ani = FuncAnimation(fig, update_plot, frames = np.arange(0, t+1, step), blit = True)
-        ani.save(nom, writer = 'ffmpeg', fps=10)
+        ani.save(nom, writer = 'ffmpeg', fps = 10)
+        plt.close()
 
     else:
-        for k in np.arange(0,t,step):
+        for k in np.arange(0, t, step):
             tin = float(T[k])
             fig.suptitle('Solution at t = %1.3f s.' %tin)
             
-            ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+            ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
             ax1.set_zlim([min_val, max_val])
             ax1.set_title('Approximation')
-            ax1.view_init(90,270)
+            ax1.view_init(90, 270)
             ax1.set_zticks([])
 
             plt.pause(0.1)
@@ -220,10 +222,10 @@ def Cloud_1(p, tt, u_ap, save = False, nom = ''):
         tin = float(T[-1])
         fig.suptitle('Solution at t = %1.3f s.' %tin)
         
-        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,-1], triangles=tt, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+        ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, -1], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
-        ax1.view_init(90,270)
+        ax1.view_init(90, 270)
         ax1.set_zticks([])
         
         plt.pause(0.1)
@@ -263,12 +265,12 @@ def Cloud_Steps_1(p, tt, u_ap, nom = ''):
         tin = float(T[k])
         
         plt.suptitle('Solution at t = %1.3f s.' %tin)
-        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
+        ax1.plot_trisurf(p[:, 0], p[:, 1], u_ap[:, k], triangles = tt, cmap = cm.coolwarm, linewidth = 0, antialiased = False)
         ax1.set_zlim([min_val, max_val])
         ax1.set_title('Approximation')
-        ax1.view_init(90,270)
+        ax1.view_init(90, 270)
         ax1.set_zticks([])
         
-        nok = nom + '_' + str(format(T[k],'.2f')) + 's.png'
+        nok = nom + '_' + str(format(T[k], '.2f')) + 's.png'
         plt.savefig(nok)
         plt.close()

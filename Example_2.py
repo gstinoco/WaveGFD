@@ -31,10 +31,10 @@ def run_example(Holes):
     ## Problem parameters.
     c       = 1                                                                     # Wave coefficient.
     cho     = 1                                                                     # Approximation Type (Boundary condition).
-    sizes   = [2]                                                             # Size of the clouds to use.
+    sizes   = [1, 2, 3]                                                             # Size of the clouds to use.
     r       = np.array([0, 0])                                                      # No water drop-function.
     t       = 2000                                                                  # Number of time-steps.
-    Save    = False                                                                  # Should I save the results?
+    Save    = True                                                                  # Should I save the results?
 
     ## Boundary conditions.
     f = lambda x, y, t, c, cho, r: np.cos(np.pi*c*t*np.sqrt(2))*np.sin(np.pi*x)*np.sin(np.pi*y)
@@ -43,8 +43,8 @@ def run_example(Holes):
                                                                                     # g = -(\pi c \sqrt{2})\sin(\pi c t\sqrt{2})\sin(\pi x)\sin(\pi y)
 
     # Consolidated path construction
-    data_path    = 'Data/{}/'.format('Holes' if Holes else 'Clouds')
-    results_path = 'Results/Example 2/{}/'.format('Holes' if Holes else 'Clouds')
+    data_path    = 'Data/{}/'.format('Holes' if Holes else 'Clouds')                # Path to look for the data.
+    results_path = 'Results/Example 2/{}/'.format('Holes' if Holes else 'Clouds')   # Path to store the results.
 
     ## Run the example for all the chosen regions.
     for me in sizes:
@@ -88,11 +88,12 @@ def run_example(Holes):
             else:
                 Graph.Cloud(p, tt, u_ap, u_ex, save = False)
 
+## Holes configurations to run several examples.
 configurations = [
-    (False),
     (True)
 ]
 
+## Run the examples.
 for Holes in configurations:
     print(f'\nComputing numerical solution with Holes = {Holes}.')
     run_example(Holes)

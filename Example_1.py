@@ -41,8 +41,8 @@ def run_example(Holes):
     g = lambda x, y, t, c, cho, r: -np.sin(np.pi*t)*np.sin(np.pi*(x+y))             # g = -\pi\sin{\pi t}\sin{\pi(x + y)}
 
     # Consolidated path construction
-    data_path    = 'Data/{}/'.format('Holes' if Holes else 'Clouds')
-    results_path = 'Results/Example 1/{}/'.format('Holes' if Holes else 'Clouds')
+    data_path    = 'Data/{}/'.format('Holes' if Holes else 'Clouds')                # Path to look for the data.
+    results_path = 'Results/Example 1/{}/'.format('Holes' if Holes else 'Clouds')   # Path to store the results.
 
     ## Run the example for all the chosen regions.
     for me in sizes:
@@ -86,11 +86,13 @@ def run_example(Holes):
             else:
                 Graph.Cloud(p, tt, u_ap, u_ex, save = False)
 
+## Holes configurations to run several examples.
 configurations = [
     (False),
     (True)
 ]
 
+## Run the examples.
 for Holes in configurations:
     print(f'\nComputing numerical solution with Holes = {Holes}.')
     run_example(Holes)
