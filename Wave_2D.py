@@ -88,13 +88,15 @@ def Cloud(p, f, g, t, c, cho, r, triangulation = False, tt = None, implicit = Fa
     K = Gammas.Cloud(p, vec, L)                                                     # K computation with the required Gammas.
 
     if implicit == False:                                                           # For the explicit scheme.
-        K1 = (np.identity(m) + (1/2)*K)                                             # Explicit formulation of K for k = 1.
-        K2 = (2*np.identity(m) + K)                                                 # Explicit formulation of K for k = 2, ..., t.
+        K1 = np.identity(m)                                                         # Implicit formulation of K for k = 1.
+        K2 = np.identity(m) + (1/2)*K                                               # Implicit formulation of K for k = 1.
+        K3 = np.identity(m)                                                         # Implicit formulation of K for k = 2, ..., t.
+        K4 = 2*np.identity(m) + K                                                   # Implicit formulation of K for k = 2, ..., t.
     else:                                                                           # For the implicit scheme.
         K1 = np.linalg.pinv(np.identity(m) - (1 - lam)*(1/2)*K)                     # Implicit formulation of K for k = 1.
-        K2 = (np.identity(m) + lam*(1/2)*K)                                         # Implicit formulation of K for k = 1.
+        K2 = np.identity(m) + lam*(1/2)*K                                           # Implicit formulation of K for k = 1.
         K3 = np.linalg.pinv(np.identity(m) - (1 - lam)*K)                           # Implicit formulation of K for k = 2, ..., t.
-        K4 = (2*np.identity(m) + lam*K)                                             # Implicit formulation of K for k = 2, ..., t.
+        K4 = 2*np.identity(m) + lam*K                                               # Implicit formulation of K for k = 2, ..., t.
 
     ## Generalized Finite Differences Method
     for k in np.arange(1, t):                                                       # For al time levels.
