@@ -13,7 +13,7 @@ Date:
     November, 2022.
 
 Last Modification:
-    March, 2024.
+    July, 2024.
 """
 
 ## Library importation.
@@ -21,11 +21,9 @@ import os
 import glob
 import Wave_2D
 import numpy as np
+import pandas as pd
 import Scripts.Graph as Graph
 import Scripts.Errors as Errors
-from scipy.io import loadmat
-from scipy.io import savemat
-from Scripts.TarFile import make_tarfile
 
 def run_example(Holes):
     ## Problem parameters.
@@ -49,20 +47,15 @@ def run_example(Holes):
         cloud       = str(me)
 
         ## Find and organize all the regions.
-        regions_path = glob.glob(f'{data_path}{cloud}/*.mat')
-        regions      = sorted([os.path.splitext(os.path.basename(region))[0] for region in regions_path])
+        regions_path = glob.glob(f'{data_path}{cloud}/*_p.csv')
+        regions      = sorted([os.path.splitext(os.path.basename(region))[0].replace('_p', '') for region in regions_path])
 
         for reg in regions:
             print(f'Region: {reg}, with size: {cloud}')
             
-            ## All data is loaded from the file
-            mat = loadmat(f'{data_path}{cloud}/{reg}.mat')
-            
-            ## Node data is saved
-            p   = mat['p']
-            tt  = mat['tt']
-            if tt.min() == 1:
-                tt -= 1
+            ## Load data from CSV files
+            p   = pd.read_csv(f'{data_path}{cloud}/{reg}_p.csv', header = None).to_numpy()
+            tt  = pd.read_csv(f'{data_path}{cloud}/{reg}_tt.csv', header = None).to_numpy()
             
             ## Wave Equation in 2D computed on a unstructured cloud of points.
             u_ap, u_ex, vec = Wave_2D.Cloud(p, f, g, t, c, cho, r, implicit = True, triangulation = False, tt = tt, lam = 0.5)
@@ -79,10 +72,9 @@ def run_example(Holes):
                 Graph.Cloud(p, tt, u_ap, u_ex, save = True, nom = os.path.join(folder, f'{reg}_{cloud}.mp4'))
                 Graph.Cloud_Steps(p, tt, u_ap, u_ex,nom = os.path.join(folder, f'{reg}_{cloud}'))
 
-                ## Save the solution un MATLAB format.
-                #mdic = {'u_ap': u_ap, 'p': p, 'tt': tt}
-                #savemat(os.path.join(folder, f'{reg}_{cloud}.mat'), mdic)
-                #make_tarfile(os.path.join(folder, f'{reg}_{cloud}' + '.tar.gz'), os.path.join(folder, f'{reg}_{cloud}.mat'))
+                ## Save the solution into CSV format.
+                #df_u_ap = pd.DataFrame(u_ap)
+                #df_u_ap.to_csv(os.path.join(folder, f'{reg}_{cloud}_u_ap.csv'), index = False, header = False)
             else:
                 Graph.Cloud(p, tt, u_ap, u_ex, save = False)
 
