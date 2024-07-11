@@ -21,6 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.animation import FuncAnimation
+plt.rcParams.update({'font.size': 18})
 
 def Cloud(p, tt, u_ap, u_ex, save = False, nom = ''):
     """
