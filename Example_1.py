@@ -31,7 +31,7 @@ def run_example(Holes):
     cho     = 1                                                                     # Approximation Type (Boundary condition).
     sizes   = [1, 2, 3]                                                             # Size of the clouds to use.
     r       = np.array([0, 0])                                                      # No water drop-function.
-    t       = 8000                                                                  # Number of time-steps.
+    t       = 2000                                                                  # Number of time-steps.
     Save    = True                                                                  # Should I save the results?
 
     ## Boundary conditions.

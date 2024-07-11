@@ -13,7 +13,7 @@ Date:
     November, 2022.
 
 Last Modification:
-    April, 2024.
+    July, 2024.
 """
 
 ## Library importation.
@@ -30,7 +30,7 @@ def run_example(Holes):
     c       = np.sqrt(1/2)                                                          # Wave coefficient.
     cho     = 0                                                                     # Approximation Type (Boundary condition).
     sizes   = [1, 2, 3]                                                             # Size of the clouds to use.
-    t       = 8000                                                                  # Number of time-steps.
+    t       = 2000                                                                  # Number of time-steps.
     Save    = True                                                                  # Should I save the results?
 
     ## Boundary conditions.
